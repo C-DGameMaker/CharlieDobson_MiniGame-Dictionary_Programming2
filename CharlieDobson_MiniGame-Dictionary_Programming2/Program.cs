@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CharlieDobson_MiniGame_Dictionary_Programming2
 {
@@ -7,22 +8,7 @@ namespace CharlieDobson_MiniGame_Dictionary_Programming2
     {
         static void Main(string[] args)
         {
-            /*
-             
-
             
-
-            Get the HP of a monster and display it
-            Declare an integer variable and store the HP of any monster in the dictionary in it. 
-            You should first check to make sure the key for that monster exists in the dictionary! 
-            Write it to the console. 
-
-            Increase every monster's hp by 10.
-            You will have to loop through the dictionary to do this! 
-
-            Finally, display all the monsters HP's
-            You will either need to do another loop, or add a line of code to the previous step. 
-             */
 
             Dictionary<string, int> monsterHealth = new Dictionary<string, int>
             {
@@ -33,12 +19,12 @@ namespace CharlieDobson_MiniGame_Dictionary_Programming2
                 {"Barbarian", 150 }
             };
 
-          while(true)
+            while (true)
             {
                 Console.WriteLine("Insert a new monster name: ");
                 string newMonsterName = Console.ReadLine();
 
-                if(monsterHealth.ContainsKey(newMonsterName))
+                if (monsterHealth.ContainsKey(newMonsterName))
                 {
                     Console.WriteLine("CANNOT ADD NEW MONSTER! MONSTER EXISTS!");
                 }
@@ -66,6 +52,45 @@ namespace CharlieDobson_MiniGame_Dictionary_Programming2
             {
                 Console.WriteLine($"Monster name: {kvp.Key} with {kvp.Value} health.");
             }
+
+
+
+            while (true)
+            {
+                Console.WriteLine("What Monster's health do you want to see?");
+                string thisMonsterName = Console.ReadLine();
+                int thisMonstersHealth;
+
+                if(monsterHealth.ContainsKey(thisMonsterName))
+                {
+                    if(monsterHealth.TryGetValue(thisMonsterName, out var result))
+                    {
+                        thisMonstersHealth = result;
+                        Console.WriteLine($"Your monster has {thisMonstersHealth} health.");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("This shouldn't happen. They should have a health. How tf did you end up there.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("This monster doesn't exist.");
+                }
+            }
+
+            foreach(var kvp in monsterHealth.Keys.ToList())
+            {
+                monsterHealth[kvp] += 10;
+            }
+            foreach (var kvp in monsterHealth)
+            {
+                Console.WriteLine($"Monster name: {kvp.Key} with {kvp.Value} health.");
+            }
+
+
+
 
 
         }
